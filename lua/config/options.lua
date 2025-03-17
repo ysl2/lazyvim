@@ -12,6 +12,21 @@ vim.api.nvim_create_autocmd("BufWritePre", {
     vim.opt.fileformat = "unix"
   end
 })
+-- Ref: https://www.reddit.com/r/neovim/comments/35h1g1/comment/cr4clpu/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
+vim.opt.ttimeoutlen = 0
+local timeoutlen
+vim.api.nvim_create_autocmd("InsertEnter", {
+  callback = function()
+    timeoutlen = vim.opt.timeoutlen:get()
+    vim.opt.timeoutlen = 0
+  end
+})
+vim.api.nvim_create_autocmd("InsertLeave", {
+  callback = function()
+    if not timeoutlen then return end
+    vim.opt.timeoutlen = timeoutlen
+  end
+})
 
 -- Allow copy paste in Neovide
 vim.g.neovide_input_use_logo = 1
