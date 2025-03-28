@@ -60,6 +60,12 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.opt_local.indentexpr = ""
   end
 })
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "nu",
+  callback = function()
+    vim.opt_local.commentstring = "# %s"
+  end
+})
 
 vim.g.autoformat = false
 vim.g.snacks_animate = false
