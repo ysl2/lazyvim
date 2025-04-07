@@ -253,6 +253,8 @@ return {
             cmd = ("cd '%s' && pdftoppm -f 1 -l 1 -png '%s' > '/tmp/%s.png' && chafa '/tmp/%s.png'"):format(dir, fileName, fileNameWithoutExt, fileNameWithoutExt)
           elseif ft == "python" then
             cmd = ("cd '%s' && python '%s'"):format(dir, fileName)
+          elseif ft == "sh" then
+            cmd = ("cd '%s' && bash '%s'"):format(dir, fileName)
           elseif fileExt == "png" or fileExt == "jpg" or fileExt == "gif" or fileExt == "svg" then
             cmd = ("cd '%s' && chafa '%s'"):format(dir, fileName)
           end
