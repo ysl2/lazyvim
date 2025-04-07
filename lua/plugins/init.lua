@@ -46,10 +46,8 @@ return {
   },
 
   -- Others
-  { "folke/lazy.nvim", version = "*" },
   {
     "LazyVim/LazyVim",
-    version = "*",
     opts = {
       colorscheme = (function()
         vim.api.nvim_create_autocmd("ColorScheme", {
