@@ -133,10 +133,10 @@ return {
       })
     end
   },
-  {
-    "tzachar/cmp-tabnine",
-    lazy = true,
-  },
+  -- {
+  --   "tzachar/cmp-tabnine",
+  --   lazy = true,
+  -- },
   {
     "hrsh7th/nvim-cmp",
     cond = vim.g.lazyvim_cmp == "nvim-cmp",
