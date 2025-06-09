@@ -5,7 +5,7 @@ return {
       github = {
         download_url_template = "https://ghfast.top/https://github.com/%s/releases/download/%s/%s",
       },
-      ensure_installed = { "latexindent", "cspell" },
+      ensure_installed = { "latexindent", "cspell", "clang-format" },
     },
   },
   {
@@ -180,6 +180,14 @@ return {
     opts = {
       formatters_by_ft = {
         tex = { "latexindent" },
+        c = { "clang_format" },
+        cpp = { "clang_format" },
+      },
+      formatters = {
+        -- Ref: https://github.com/LazyVim/LazyVim/discussions/3734
+        clang_format = {
+          prepend_args = { "--style={BasedOnStyle: Google, IndentWidth: 4, AllowShortFunctionsOnASingleLine: Empty}" },
+        },
       },
     },
   },
