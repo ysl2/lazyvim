@@ -196,13 +196,7 @@ return {
     opts = {
       linters = {
         cspell = {
-          args = {
-            'lint',
-            '--no-color',
-            '--no-progress',
-            '--no-summary',
-            '--config=' .. vim.fn.stdpath("config") .. "/cspell.json",
-          },
+          args = { "lint", "--no-color", "--no-progress", "--no-summary", "--config=" .. vim.fn.stdpath("config") .. "/cspell.json" },
         },
       },
     },
@@ -210,12 +204,8 @@ return {
   {
     "mfussenegger/nvim-lint",
     opts = function (_, opts)
-      local supported = {
-        "tex",
-        "markdown",
-      }
       opts.linters_by_ft = opts.linters_by_ft or {}
-      for _, ft in ipairs(supported) do
+      for _, ft in ipairs({ "tex", "markdown" }) do
         opts.linters_by_ft[ft] = opts.linters_by_ft[ft] or {}
         table.insert(opts.linters_by_ft[ft], "cspell")
       end
