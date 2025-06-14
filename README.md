@@ -8,6 +8,8 @@ Refer to the [documentation](https://lazyvim.github.io/installation) to get star
 ### Common
 
 ```bash
+git clone git@github.com/ysl2/starter.git ~/.config/nvim
+
 sudo apt install -y xsel  # For clipboard support
 brew install rustup; rustup toolchain install nightly  # For blink.cmp
 brew install pngpaste  # For img-clip.nvim
