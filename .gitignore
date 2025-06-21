@@ -6,5 +6,5 @@ debug
 foo.*
 *.log
 data
-lazyvim.json
+# lazyvim.json
 localhost
