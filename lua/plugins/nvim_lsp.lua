@@ -5,7 +5,12 @@ return {
       github = {
         download_url_template = "https://ghfast.top/https://github.com/%s/releases/download/%s/%s",
       },
-      ensure_installed = { "latexindent", "cspell", "clang-format" },
+      ensure_installed = {
+        "latexindent",
+        "cspell",
+        "clang-format",
+        -- "ty",
+      },
     },
   },
   {
@@ -46,6 +51,7 @@ return {
   {
     "neovim/nvim-lspconfig",
     opts = {
+      -- NOTE: Rewrite LazyVim's LSP servers here.
       servers = {
         gopls = {
           settings = {
@@ -79,6 +85,10 @@ return {
             },
           },
         },
+        -- ruff = {
+        --   -- NOTE: Conflict with `ty`.
+        --   enabled = false,
+        -- },
       },
       -- setup = {
       --   -- Ref: https://www.reddit.com/r/neovim/comments/108tjy0/nvimlspconfig_how_to_disable_hints_for_unused
@@ -131,6 +141,21 @@ return {
           })
         end,
       })
+
+      -- NOTE: Add custom LSP servers here.
+      -- local servers = {
+      --   ty = {
+      --     init_options = {
+      --       settings = {
+      --         -- ty language server settings go here
+      --       },
+      --     },
+      --   },
+      -- }
+      -- for server, server_opts in pairs(servers) do
+      --   vim.lsp.config(server, server_opts)
+      -- end
+      -- vim.lsp.enable({ "ty" })
     end,
   },
   -- {
