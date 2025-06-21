@@ -10,7 +10,7 @@ vim.opt.lazyredraw = true
 vim.api.nvim_create_autocmd("BufWritePre", {
   callback = function()
     vim.opt.fileformat = "unix"
-  end
+  end,
 })
 -- Ref: https://www.reddit.com/r/neovim/comments/35h1g1/comment/cr4clpu/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
 vim.opt.ttimeoutlen = 0
@@ -19,13 +19,15 @@ vim.api.nvim_create_autocmd("InsertEnter", {
   callback = function()
     timeoutlen = vim.opt.timeoutlen:get()
     vim.opt.timeoutlen = 0
-  end
+  end,
 })
 vim.api.nvim_create_autocmd("InsertLeave", {
   callback = function()
-    if not timeoutlen then return end
+    if not timeoutlen then
+      return
+    end
     vim.opt.timeoutlen = timeoutlen
-  end
+  end,
 })
 
 -- Allow copy paste in Neovide
@@ -50,7 +52,7 @@ vim.api.nvim_create_autocmd("FileType", {
   callback = function()
     vim.opt_local.tabstop = 2
     vim.opt_local.shiftwidth = 2
-  end
+  end,
 })
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "tex",
@@ -58,13 +60,13 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.opt_local.expandtab = false
     -- Ref: https://vi.stackexchange.com/a/34778
     vim.opt_local.indentexpr = ""
-  end
+  end,
 })
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "nu",
   callback = function()
     vim.opt_local.commentstring = "# %s"
-  end
+  end,
 })
 
 vim.g.autoformat = false

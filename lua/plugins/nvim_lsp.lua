@@ -19,13 +19,13 @@ return {
       },
       signature = {
         enabled = true,
-        window = { border = "single" }
+        window = { border = "single" },
       },
     },
   },
   {
     "saghen/blink.cmp",
-    opts = function (_, opts)
+    opts = function(_, opts)
       -- From upstream: remove the "ai_accept" because I use `<C-g>` for ai completion.
       if not opts.keymap["<Tab>"] then
         if opts.keymap.preset == "super-tab" then -- super-tab
@@ -41,7 +41,7 @@ return {
           }
         end
       end
-    end
+    end,
   },
   {
     "neovim/nvim-lspconfig",
@@ -54,7 +54,7 @@ return {
                 -- NOTE: LSP[gopls] Invalid settings: setting option "analyses": this setting is deprecated,
                 -- use "the 'fieldalignment' analyzer was removed in gopls/v0.17.0;
                 -- instead, hover over struct fields to see size/offset information (https://go.dev/issue/66861)" instead
-                fieldalignment = false
+                fieldalignment = false,
               },
             },
           },
@@ -127,11 +127,11 @@ return {
                 prefix = " ",
                 scope = "cursor",
               })
-            end
+            end,
           })
-        end
+        end,
       })
-    end
+    end,
   },
   -- {
   --   "tzachar/cmp-tabnine",
@@ -155,11 +155,23 @@ return {
           end,
         }),
       }
-    end
+    end,
   },
-  { "hrsh7th/cmp-nvim-lsp", cond = vim.g.lazyvim_cmp == "nvim-cmp", url = "git@github.com:iguanacucumber/mag-nvim-lsp.git" },
-  { "hrsh7th/cmp-buffer", cond = vim.g.lazyvim_cmp == "nvim-cmp", url = "git@github.com:iguanacucumber/mag-buffer.git" },
-  { "hrsh7th/cmp-path", cond = vim.g.lazyvim_cmp == "nvim-cmp", url = "https://codeberg.org/FelipeLema/cmp-async-path" },
+  {
+    "hrsh7th/cmp-nvim-lsp",
+    cond = vim.g.lazyvim_cmp == "nvim-cmp",
+    url = "git@github.com:iguanacucumber/mag-nvim-lsp.git",
+  },
+  {
+    "hrsh7th/cmp-buffer",
+    cond = vim.g.lazyvim_cmp == "nvim-cmp",
+    url = "git@github.com:iguanacucumber/mag-buffer.git",
+  },
+  {
+    "hrsh7th/cmp-path",
+    cond = vim.g.lazyvim_cmp == "nvim-cmp",
+    url = "https://codeberg.org/FelipeLema/cmp-async-path",
+  },
   {
     "ray-x/lsp_signature.nvim",
     custom = true,
@@ -170,8 +182,8 @@ return {
         bind = true,
         hint_enable = false,
         handler_opts = {
-          border = "single"
-        }
+          border = "single",
+        },
       })
     end,
   },
@@ -196,19 +208,25 @@ return {
     opts = {
       linters = {
         cspell = {
-          args = { "lint", "--no-color", "--no-progress", "--no-summary", "--config=" .. vim.fn.stdpath("config") .. "/cspell.json" },
+          args = {
+            "lint",
+            "--no-color",
+            "--no-progress",
+            "--no-summary",
+            "--config=" .. vim.fn.stdpath("config") .. "/cspell.json",
+          },
         },
       },
     },
   },
   {
     "mfussenegger/nvim-lint",
-    opts = function (_, opts)
+    opts = function(_, opts)
       opts.linters_by_ft = opts.linters_by_ft or {}
       for _, ft in ipairs({ "tex", "markdown" }) do
         opts.linters_by_ft[ft] = opts.linters_by_ft[ft] or {}
         table.insert(opts.linters_by_ft[ft], "cspell")
       end
-    end
+    end,
   },
 }

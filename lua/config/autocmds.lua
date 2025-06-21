@@ -62,10 +62,14 @@ vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
 -- Auto delete [No Name] buffers.
 vim.api.nvim_create_autocmd("BufLeave", {
   callback = function(args)
-    if vim.api.nvim_buf_get_name(args.buf) == "" and not vim.bo[args.buf].modified and vim.fn.buflisted(args.buf) == 1 then
+    if
+      vim.api.nvim_buf_get_name(args.buf) == ""
+      and not vim.bo[args.buf].modified
+      and vim.fn.buflisted(args.buf) == 1
+    then
       vim.schedule(function()
         pcall(vim.api.nvim_buf_delete, args.buf, { force = true })
       end)
     end
-  end
+  end,
 })

@@ -3,7 +3,7 @@ return {
   {
     "Mofiqul/vscode.nvim",
     custom = true,
-    cond = not not vim.g.started_by_firenvim or "leetcode.nvim" == vim.fn.argv(0, -1)
+    cond = not not vim.g.started_by_firenvim or "leetcode.nvim" == vim.fn.argv(0, -1),
   },
   -- { "folke/tokyonight.nvim", cond = not vim.g.started_by_firenvim and "leetcode.nvim" ~= vim.fn.argv(0, -1) },
   {
@@ -30,7 +30,7 @@ return {
           -- LazyNormal = { bg = theme.ui.bg_m3, fg = theme.ui.fg_dim },
           -- MasonNormal = { bg = theme.ui.bg_m3, fg = theme.ui.fg_dim },
 
-          Pmenu = { fg = theme.ui.shade0, bg = theme.ui.bg_p1 },  -- add `blend = vim.o.pumblend` to enable transparency
+          Pmenu = { fg = theme.ui.shade0, bg = theme.ui.bg_p1 }, -- add `blend = vim.o.pumblend` to enable transparency
           PmenuSel = { fg = "NONE", bg = theme.ui.bg_p2 },
           PmenuSbar = { bg = theme.ui.bg_m1 },
           PmenuThumb = { bg = theme.ui.bg_p2 },
@@ -73,9 +73,9 @@ return {
             vim.api.nvim_set_hl(0, "LineNr", opts2)
             vim.api.nvim_set_hl(0, "LineNrAbove", opts2)
             vim.api.nvim_set_hl(0, "LineNrBelow", opts2)
-            vim.api.nvim_set_hl(0, 'DiagnosticUnnecessary', opts2)
-            vim.api.nvim_set_hl(0, 'WinSeparator', opts2)
-          end
+            vim.api.nvim_set_hl(0, "DiagnosticUnnecessary", opts2)
+            vim.api.nvim_set_hl(0, "WinSeparator", opts2)
+          end,
         })
         if not not vim.g.started_by_firenvim or "leetcode.nvim" == vim.fn.argv(0, -1) then
           return "vscode"
@@ -89,15 +89,15 @@ return {
       icons = {
         diagnostics = {
           Error = " ",
-          Warn  = " ",
-          Hint  = " ",
-          Info  = " ",
+          Warn = " ",
+          Hint = " ",
+          Info = " ",
         },
         git = {
           added = "+",
           modified = "~",
           removed = "-",
-        }
+        },
       },
     },
   },
@@ -165,9 +165,9 @@ return {
     config = function()
       vim.cmd("hi link UnwantedTrailerTrash NONE")
       vim.api.nvim_create_autocmd("BufWritePre", {
-        command = "TrailerTrim"
+        command = "TrailerTrim",
       })
-    end
+    end,
   },
   {
     "s1n7ax/nvim-window-picker",
@@ -181,16 +181,16 @@ return {
         end,
         mode = "n",
         silent = true,
-        desc = "Pick a window"
-      }
+        desc = "Pick a window",
+      },
     },
     opts = {
       show_prompt = false,
       filter_rules = {
         bo = {
-          filetype = { "notify" }
-        }
-      }
+          filetype = { "notify" },
+        },
+      },
     },
   },
   {
@@ -218,8 +218,8 @@ return {
           ["t"] = "open_tab_drop_and_close_tree",
           ["<C-h>"] = "close_all_subnodes",
           ["<C-c>"] = "revert_preview",
-          ["I"] = "toggle_hidden"
-        }
+          ["I"] = "toggle_hidden",
+        },
       },
       commands = {
         open_tab_drop_and_close_tree = function(state, toggle_directory)
@@ -230,7 +230,7 @@ return {
           require("neo-tree.sources.common.commands").open_tab_drop(state, toggle_directory)
           local winid = state.winid
           if winid and vim.api.nvim_win_is_valid(winid) then
-              vim.api.nvim_win_close(winid, true)
+            vim.api.nvim_win_close(winid, true)
           end
         end,
       },
@@ -250,7 +250,12 @@ return {
           local cmd
 
           if ft == "pdf" then
-            cmd = ("cd '%s' && pdftoppm -f 1 -l 1 -png '%s' > '/tmp/%s.png' && chafa '/tmp/%s.png'"):format(dir, fileName, fileNameWithoutExt, fileNameWithoutExt)
+            cmd = ("cd '%s' && pdftoppm -f 1 -l 1 -png '%s' > '/tmp/%s.png' && chafa '/tmp/%s.png'"):format(
+              dir,
+              fileName,
+              fileNameWithoutExt,
+              fileNameWithoutExt
+            )
           elseif ft == "python" then
             cmd = ("cd '%s' && python '%s'"):format(dir, fileName)
           elseif ft == "sh" then
@@ -258,17 +263,27 @@ return {
           elseif fileExt == "png" or fileExt == "jpg" or fileExt == "gif" or fileExt == "svg" then
             cmd = ("cd '%s' && chafa '%s'"):format(dir, fileName)
           end
-          if not cmd then return end
-          Snacks.terminal(cmd, { cwd = LazyVim.root(), interactive = false, win = { on_buf = function () vim.cmd.startinsert() end } })
+          if not cmd then
+            return
+          end
+          Snacks.terminal(cmd, {
+            cwd = LazyVim.root(),
+            interactive = false,
+            win = {
+              on_buf = function()
+                vim.cmd.startinsert()
+              end,
+            },
+          })
         end,
-        desc = "Debug run command for current filetype"
+        desc = "Debug run command for current filetype",
       },
       {
         "<leader>\\",
-        function ()
+        function()
           Snacks.terminal(vim.fn.input(""), { cwd = LazyVim.root(), interactive = true })
         end,
-        desc = "Run custom command in snacks terminal."
+        desc = "Run custom command in snacks terminal.",
       },
     },
     opts = {
@@ -293,16 +308,18 @@ return {
           width = 0.83,
         },
       },
-    }
+    },
   },
   {
     "glacambre/firenvim",
     custom = true,
-    build = function() vim.fn["firenvim#install"](0) end,
+    build = function()
+      vim.fn["firenvim#install"](0)
+    end,
     -- Lazy load firenvim
     -- Explanation: https://github.com/folke/lazy.nvim/discussions/463#discussioncomment-4819297
     cond = not not vim.g.started_by_firenvim,
-    config = function()  -- NOTE: Must be in `config` instead of `opts`, otherwise firenvim will complain.
+    config = function() -- NOTE: Must be in `config` instead of `opts`, otherwise firenvim will complain.
       vim.api.nvim_create_autocmd("UIEnter", {
         callback = function()
           local client = vim.api.nvim_get_chan_info(vim.v.event.chan).client
@@ -311,20 +328,20 @@ return {
             vim.opt.laststatus = 0
             vim.opt.swapfile = false
           end
-        end
+        end,
       })
       vim.api.nvim_create_autocmd("BufEnter", {
         pattern = { "github.com_*.txt", "gitee.com_*.txt" },
         callback = function()
           vim.opt.filetype = "markdown"
-        end
+        end,
       })
       vim.api.nvim_create_autocmd("BufEnter", {
         pattern = { "leetcode.com_*.txt", "leetcode.cn_*.txt" },
         callback = function()
           vim.opt.filetype = "python"
           vim.opt.expandtab = true
-        end
+        end,
       })
       vim.g.firenvim_config = {
         localSettings = {
@@ -336,9 +353,9 @@ return {
           -- [".*"] = { priority = 0 },
           -- ["https?://leetcode\\.cn/problems/*"] = { priority = 1, takeover = "always" },
           [".*"] = { priority = 0, takeover = "never" },
-        }
+        },
       }
-    end
+    end,
   },
   {
     "folke/persistence.nvim",
@@ -356,7 +373,7 @@ return {
           end
         end,
       })
-    end
+    end,
   },
   {
     "lewis6991/gitsigns.nvim",
@@ -364,7 +381,7 @@ return {
       current_line_blame_opts = {
         delay = 0,
       },
-    }
+    },
   },
   {
     "akinsho/bufferline.nvim",
@@ -373,8 +390,8 @@ return {
         mode = "tabs",
         show_buffer_close_icons = false,
         show_close_icon = false,
-      }
-    }
+      },
+    },
   },
   { "folke/flash.nvim", enabled = false },
   {
@@ -387,7 +404,7 @@ return {
       keymaps = {
         insert = "<A-g>s",
         insert_line = "<A-g>S",
-      }
+      },
     },
   },
   {
@@ -399,7 +416,7 @@ return {
       { "s", "<CMD>silent! HopChar1MW<CR>", mode = { "n", "o", "x" }, silent = true },
       -- { "<LEADER><LEADER>", "<CMD>silent! HopPatternMW<CR>", mode = { "n", "o", "x" }, silent = true }
     },
-    opts = {}
+    opts = {},
   },
   {
     "lukas-reineke/indent-blankline.nvim",
@@ -408,19 +425,29 @@ return {
     },
   },
   {
-    'kevinhwang91/nvim-hlslens',
+    "kevinhwang91/nvim-hlslens",
     custom = true,
     keys = {
       { "/" },
       { "?" },
-      { "n", function ()
-        vim.cmd("normal! " .. vim.v.count1 .. "n")
-        require("hlslens").start()
-      end, mode = { "n", "v" }, silent = true },
-      { "N", function ()
-        vim.cmd("normal! " .. vim.v.count1 .. "N")
-        require("hlslens").start()
-      end, mode = { "n", "v" }, silent = true },
+      {
+        "n",
+        function()
+          vim.cmd("normal! " .. vim.v.count1 .. "n")
+          require("hlslens").start()
+        end,
+        mode = { "n", "v" },
+        silent = true,
+      },
+      {
+        "N",
+        function()
+          vim.cmd("normal! " .. vim.v.count1 .. "N")
+          require("hlslens").start()
+        end,
+        mode = { "n", "v" },
+        silent = true,
+      },
       { "*", [[*<CMD>lua require('hlslens').start()<CR>]], mode = { "n", "v" }, silent = true },
       { "#", [[#<CMD>lua require('hlslens').start()<CR>]], mode = { "n", "v" }, silent = true },
       { "g*", [[g*<CMD>lua require('hlslens').start()<CR>]], mode = { "n", "v" }, silent = true },
@@ -438,8 +465,8 @@ return {
         keymap = {
           accept_line = "<C-l>",
         },
-      }
-    }
+      },
+    },
   },
   {
     "CopilotC-Nvim/CopilotChat.nvim",
@@ -465,8 +492,8 @@ return {
             vim.defer_fn(function()
               vim.cmd("startinsert")
             end, 100)
-          end
-        }
+          end,
+        },
       },
       providers = {
         openai = {
@@ -536,12 +563,12 @@ return {
       -- configuration goes here
       lang = "python3",
       cn = { -- leetcode.cn
-          enabled = true,
-          translator = false,
+        enabled = true,
+        translator = false,
       },
       -- image_support = true,
       plugins = {
-          non_standalone = true,
+        non_standalone = true,
       },
     },
   },
@@ -551,7 +578,7 @@ return {
     opts = {
       options = {
         section_separators = { left = "", right = "" },
-        component_separators = { left = "", right = "" }
+        component_separators = { left = "", right = "" },
       },
       sections = {
         lualine_z = {
@@ -563,9 +590,9 @@ return {
             local milliseconds = math.floor((seconds - math.floor(seconds)) * 1000)
             return string.format(" %02d:%02d:%02d.%03d", now.hour, now.min, now.sec, milliseconds)
           end,
-        }
-      }
-    }
+        },
+      },
+    },
   },
   {
     "ahmedkhalf/project.nvim",
@@ -643,7 +670,7 @@ return {
             ["alt-i"] = false,
             ["ctrl-g"] = false,
             ["ctrl-y"] = fzf_lua.actions.toggle_hidden,
-            ["ctrl-o"] = fzf_lua.actions.toggle_ignore
+            ["ctrl-o"] = fzf_lua.actions.toggle_ignore,
           },
         },
         grep = {
@@ -651,7 +678,7 @@ return {
             ["alt-h"] = false,
             ["alt-i"] = false,
             ["ctrl-y"] = fzf_lua.actions.toggle_hidden,
-            ["ctrl-o"] = fzf_lua.actions.toggle_ignore
+            ["ctrl-o"] = fzf_lua.actions.toggle_ignore,
           },
           winopts = {
             preview = {
@@ -672,14 +699,14 @@ return {
               hidden = false,
             },
           },
-        }
+        },
       }
-    end
+    end,
   },
   {
     "tpope/vim-rsi",
     custom = true,
-    event = "InsertEnter"
+    event = "InsertEnter",
   },
   {
     "gbprod/yanky.nvim",
@@ -714,14 +741,20 @@ return {
       vim.g.vimtex_view_zathura_use_synctex = 0
       -- Ref: https://github.com/lervag/vimtex/issues/2007
       vim.g.vimtex_indent_enabled = 0
-    end
+    end,
   },
   {
     "jiaoshijie/undotree",
     custom = true,
     dependencies = "nvim-lua/plenary.nvim",
     keys = {
-      { "<leader>ut", function() require("undotree").toggle() end, desc = "Toggle undotree" },
+      {
+        "<leader>ut",
+        function()
+          require("undotree").toggle()
+        end,
+        desc = "Toggle undotree",
+      },
     },
     opts = {
       float_diff = false,
@@ -738,9 +771,9 @@ return {
           vim.keymap.set("n", "<C-w>q", function()
             undotree.toggle()
           end, { buffer = true, desc = "Toggle undotree for undotreeDiff filetype." })
-        end
+        end,
       })
-    end
+    end,
   },
   {
     "andis-sprinkis/lf-vim",
@@ -752,9 +785,9 @@ return {
         pattern = "lf",
         callback = function()
           vim.opt_local.commentstring = "# %s"
-        end
+        end,
       })
-    end
+    end,
   },
   {
     "folke/trouble.nvim",
@@ -769,14 +802,14 @@ return {
         pattern = "trouble",
         callback = function()
           vim.keymap.set("n", "<C-w>q", "q", { silent = true, buffer = true, remap = true })
-        end
+        end,
       })
-    end
+    end,
   },
   {
     "AndrewRadev/linediff.vim",
     custom = true,
-    cmd = "Linediff"
+    cmd = "Linediff",
   },
   {
     "kevinhwang91/nvim-fundo",
@@ -786,11 +819,11 @@ return {
     build = function()
       require("fundo").install()
     end,
-    config = function()  -- NOTE: This plugin is required to be configured specifically. The `config = true` will not work.
+    config = function() -- NOTE: This plugin is required to be configured specifically. The `config = true` will not work.
       require("fundo").setup({
         archives_dir = vim.fn.stdpath("state") .. "/fundo",
       })
-    end
+    end,
   },
   {
     -- support for image pasting
@@ -802,10 +835,12 @@ return {
       {
         "<leader>P",
         function()
-          return (package.loaded["avante"] and vim.bo.filetype == "AvanteInput") and require("avante.clipboard").paste_image()
+          return (package.loaded["avante"] and vim.bo.filetype == "AvanteInput")
+              and require("avante.clipboard").paste_image()
             or require("img-clip").paste_image()
         end,
-        desc = "Paste image from system clipboard" },
+        desc = "Paste image from system clipboard",
+      },
     },
     opts = {
       -- recommended settings
