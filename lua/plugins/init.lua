@@ -209,6 +209,7 @@ return {
       { "<leader>E", "<leader>fe", desc = "Explorer NeoTree (Root Dir)", remap = true },
     },
     opts = {
+      -- close_if_last_window = true,
       window = {
         width = "20%",
         mappings = {
