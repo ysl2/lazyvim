@@ -827,6 +827,7 @@ return {
     end,
   },
   {
+    -- NOTE: Paste from https://github.com/yetone/avante.nvim?tab=readme-ov-file#installation
     -- support for image pasting
     "HakonHarnes/img-clip.nvim",
     custom = true,
@@ -850,9 +851,9 @@ return {
           return "assets/" .. vim.fn.expand("%:t:r")
         end,
         relative_to_current_file = true,
-        drag_and_drop = {
-          insert_mode = true,
-        },
+        -- drag_and_drop = {
+        --   insert_mode = true,
+        -- },
         -- required for Windows users
         use_absolute_path = LazyVim.is_win(),
       },
