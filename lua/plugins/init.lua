@@ -859,6 +859,11 @@ return {
         -- required for Windows users
         use_absolute_path = LazyVim.is_win(),
       },
+      filetypes = {
+        markdown = {
+          template = '<img src="$FILE_PATH" alt="$CURSOR" width=100%>',
+        },
+      },
     },
   },
   -- {
