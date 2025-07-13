@@ -472,11 +472,19 @@ return {
   {
     "CopilotC-Nvim/CopilotChat.nvim",
     keys = {
-      { "<C-9>", "<leader>aa", desc = "Toggle (CopilotChat)", mode = { "n", "v" }, remap = true },
+      {
+        "<C-9>",
+        function()
+          return require("CopilotChat").toggle()
+        end,
+        desc = "Toggle (CopilotChat)",
+        mode = { "n", "v" },
+        remap = true,
+      },
     },
     build = "make tiktoken", -- Only on MacOS or Linux
     opts = {
-      model = "Pro/deepseek-ai/DeepSeek-V3",
+      model = (_G.localhost.OPENAI_MODEL or os.getenv("OPENAI_MODEL") or "moonshotai/Kimi-K2-Instruct"),
       window = {
         layout = "float",
         width = 0.8, -- fractional width of parent, or absolute width in columns when > 1
@@ -506,10 +514,14 @@ return {
             }
           end,
           get_models = function(headers)
-            local response, err = require("CopilotChat.utils").curl_get("https://api.siliconflow.cn/v1/models", {
-              headers = headers,
-              json_response = true,
-            })
+            local response, err = require("CopilotChat.utils").curl_get(
+              (_G.localhost.OPENAI_API_URL or os.getenv("OPENAI_API_URL") or "https://api.siliconflow.cn/v1")
+                .. "/models",
+              {
+                headers = headers,
+                json_response = true,
+              }
+            )
             if err then
               error(err)
             end
@@ -521,22 +533,31 @@ return {
             end, response.body.data)
           end,
           embed = function(inputs, headers)
-            local response, err = require("CopilotChat.utils").curl_post("https://api.siliconflow.cn/v1/embeddings", {
-              headers = headers,
-              json_request = true,
-              json_response = true,
-              body = {
-                input = inputs,
-                model = "Pro/BAAI/bge-m3",
-              },
-            })
+            local response, err = require("CopilotChat.utils").curl_post(
+              (_G.localhost.OPENAI_API_URL or os.getenv("OPENAI_API_URL") or "https://api.siliconflow.cn/v1")
+                .. "/embeddings",
+              {
+                headers = headers,
+                json_request = true,
+                json_response = true,
+                body = {
+                  input = inputs,
+                  model = (
+                    _G.localhost.OPENAI_MODEL_EMBED
+                    or os.getenv("OPENAI_MODEL_EMBED")
+                    or "Qwen/Qwen3-Embedding-0.6B"
+                  ),
+                },
+              }
+            )
             if err then
               error(err)
             end
             return response.body.data
           end,
           get_url = function()
-            return "https://api.siliconflow.cn/v1/chat/completions"
+            return (_G.localhost.OPENAI_API_URL or os.getenv("OPENAI_API_URL") or "https://api.siliconflow.cn/v1")
+              .. "/chat/completions"
           end,
         },
       },
