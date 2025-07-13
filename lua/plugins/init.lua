@@ -850,7 +850,7 @@ return {
       -- recommended settings
       default = {
         dir_path = function()
-          return "assets/" .. vim.fn.expand("%:t:r")
+          return "assets/" .. vim.fn.expand("%:t:r") .. "/img"
         end,
         relative_to_current_file = true,
         -- drag_and_drop = {
@@ -858,6 +858,11 @@ return {
         -- },
         -- required for Windows users
         use_absolute_path = LazyVim.is_win(),
+      },
+      filetypes = {
+        markdown = {
+          template = '<img width=100% alt="$CURSOR" src="$FILE_PATH" />',
+        },
       },
     },
   },
