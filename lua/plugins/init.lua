@@ -711,7 +711,9 @@ return {
   },
   {
     "gbprod/yanky.nvim",
+    dependencies = { "kkharji/sqlite.lua", custom = true },
     opts = {
+      ring = { storage = "sqlite" },
       highlight = {
         on_put = false,
         timer = vim.highlight.priorities.user,
