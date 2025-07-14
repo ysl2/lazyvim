@@ -220,6 +220,7 @@ return {
           ["<C-h>"] = "close_all_subnodes",
           ["<C-c>"] = "revert_preview",
           ["I"] = "toggle_hidden",
+          ["H"] = "",
         },
       },
       commands = {
