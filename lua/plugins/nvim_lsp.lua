@@ -1,3 +1,45 @@
+-- Replaces schema URLs with a proxied version based on a set of predefined rules.
+-- This implementation assumes that all rule prefixes are mutually exclusive
+-- (i.e., no rule's prefix is a substring of another's).
+--
+-- @param schemas table<string, any> The input schema table, where keys are the URLs.
+-- @return table<string, any> A new table with the URLs replaced.
+local function proxy_schema_urls(schemas)
+  -- Define all replacement rules here.
+  -- The key is the old prefix to be replaced, and the value is the new prefix.
+  -- This map structure is simple and direct because matching order is not a concern.
+  local replacement_rules = {
+    ["https://alec016.github.io/Custom-Machinery"] = "https://ghfast.top/https://raw.githubusercontent.com/alec016/Custom-Machinery/refs/heads/1.19.2",
+    ["https://github.com"] = "https://ghfast.top/https://github.com",
+    ["https://json.schemastore.org"] = "https://ghfast.top/https://raw.githubusercontent.com/SchemaStore/schemastore/refs/heads/master/src/schemas/json",
+    ["https://raw.githubusercontent.com"] = "https://ghfast.top/https://raw.githubusercontent.com",
+  }
+
+  -- Create a new table to store the results, avoiding modification during iteration.
+  local new_schemas = {}
+
+  for original_url, schema in pairs(schemas) do
+    local new_url = original_url -- Assume no replacement by default.
+
+    -- Iterate through the replacement rules. Order does not matter.
+    for old_prefix, new_prefix in pairs(replacement_rules) do
+      -- Check if the URL starts with the prefix to be replaced.
+      -- The 'true' flag enables plain string comparison, which is fast.
+      if original_url:find(old_prefix, 1, true) == 1 then
+        -- If a match is found, construct the new URL.
+        new_url = new_prefix .. original_url:sub(#old_prefix + 1)
+        -- Since rules are independent, we can stop searching for this URL.
+        break
+      end
+    end
+
+    -- Assign the schema to the final URL (either replaced or original).
+    new_schemas[new_url] = schema
+  end
+
+  return new_schemas
+end
+
 return {
   {
     "williamboman/mason.nvim",
@@ -90,6 +132,23 @@ return {
         --   -- NOTE: Conflict with `ty`.
         --   enabled = false,
         -- },
+        jsonls = {
+          on_new_config = function(new_config)
+            vim.list_extend(
+              new_config.settings.json.schemas or {},
+              proxy_schema_urls(require("schemastore").json.schemas())
+            )
+          end,
+        },
+        yamlls = {
+          on_new_config = function(new_config)
+            new_config.settings.yaml.schemas = vim.tbl_deep_extend(
+              "force",
+              new_config.settings.yaml.schemas or {},
+              proxy_schema_urls(require("schemastore").yaml.schemas())
+            )
+          end,
+        },
       },
       -- setup = {
       --   -- Ref: https://www.reddit.com/r/neovim/comments/108tjy0/nvimlspconfig_how_to_disable_hints_for_unused
