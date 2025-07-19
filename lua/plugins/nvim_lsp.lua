@@ -10,6 +10,7 @@ return {
         "cspell",
         "clang-format",
         -- "ty",
+        "dockerfile-language-server",
       },
     },
   },
