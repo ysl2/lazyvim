@@ -50,7 +50,7 @@
   "nvim-ts-autotag": { "branch": "main", "commit": "a1d526af391f6aebb25a8795cbc05351ed3620b5" },
   "nvim-window-picker": { "branch": "main", "commit": "6382540b2ae5de6c793d4aa2e3fe6dbb518505ec" },
   "nvim-yati": { "branch": "main", "commit": "df3dc06076c6fe20a1dcd8643e712af5c252d042" },
-  "outline.nvim": { "branch": "main", "commit": "ae473fb51b7b6086de0876328c81a63f9c3ecfef" },
+  "outline.nvim": { "branch": "main", "commit": "0eb9289ab39c91caf8b3ed0e3a17764809d69558" },
   "persistence.nvim": { "branch": "main", "commit": "166a79a55bfa7a4db3e26fc031b4d92af71d0b51" },
   "plenary.nvim": { "branch": "master", "commit": "857c5ac632080dba10aae49dba902ce3abf91b35" },
   "project.nvim": { "branch": "main", "commit": "8c6bad7d22eef1b71144b401c9f74ed01526a4fb" },
