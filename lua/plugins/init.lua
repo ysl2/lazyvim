@@ -206,21 +206,21 @@ return {
         end,
         desc = "Explorer NeoTree (cwd)",
       },
-      { "<leader>E", "<leader>fe", desc = "Explorer NeoTree (Root Dir)", remap = true },
+      {
+        "<leader>E",
+        function()
+          require("neo-tree.command").execute({ toggle = true, dir = LazyVim.root() })
+          vim.cmd("wincmd =")
+        end,
+        desc = "Explorer NeoTree (Root Dir)",
+      },
     },
     opts = {
       -- close_if_last_window = true,
-      window = {
-        width = "20%",
-        mappings = {
-          ["<C-s>"] = "split_with_window_picker",
-          ["<C-v>"] = "vsplit_with_window_picker",
-          ["<C-t>"] = "open_tab_drop",
-          ["t"] = "open_tab_drop_and_close_tree",
-          ["<C-h>"] = "close_all_subnodes",
-          ["<C-c>"] = "revert_preview",
-          ["I"] = "toggle_hidden",
-          ["H"] = "",
+      -- sort_case_insensitive = true,
+      default_component_configs = {
+        symlink_target = {
+          enabled = true,
         },
       },
       commands = {
@@ -235,6 +235,21 @@ return {
             vim.api.nvim_win_close(winid, true)
           end
         end,
+      },
+      window = {
+        width = "20%",
+        mappings = {
+          ["s"] = "split_with_window_picker",
+          ["S"] = "",
+          ["v"] = "vsplit_with_window_picker",
+          ["t"] = "open_tab_drop",
+          ["T"] = "open_tab_drop_and_close_tree",
+          ["<C-c>"] = "revert_preview",
+          ["I"] = "toggle_hidden",
+          ["H"] = "",
+          ["z"] = "expand_all_nodes",
+          ["Z"] = "close_all_nodes",
+        },
       },
     },
   },
