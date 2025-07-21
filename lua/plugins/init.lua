@@ -654,6 +654,13 @@ return {
     },
   },
   -- {
+  --   -- NOTE: Use this below to enable all symbols.
+  --   "hedyhli/outline.nvim",
+  --   opts = function(_, opts)
+  --     opts.symbols.filter = nil
+  --   end,
+  -- },
+  -- {
   --   "ysl2/vim-python-pep8-indent",
   --   custom = true,
   --   ft = "python"
