@@ -266,7 +266,9 @@ return {
           local fileExt = vim.fn.expand("%:e")
           local cmd
 
-          if ft == "pdf" then
+          if fileName == "Makefile" then
+            cmd = ("cd '%s' && make"):format(dir)
+          elseif ft == "pdf" then
             cmd = ("cd '%s' && pdftoppm -f 1 -l 1 -png '%s' > '/tmp/%s.png' && chafa '/tmp/%s.png'"):format(
               dir,
               fileName,
@@ -277,6 +279,8 @@ return {
             cmd = ("cd '%s' && python '%s'"):format(dir, fileName)
           elseif ft == "sh" then
             cmd = ("cd '%s' && bash '%s'"):format(dir, fileName)
+          elseif ft == "c" then
+            cmd = ("cd '%s' && gcc %s -o %s && ./%s"):format(dir, fileName, fileNameWithoutExt, fileNameWithoutExt)
           elseif fileExt == "png" or fileExt == "jpg" or fileExt == "gif" or fileExt == "svg" then
             cmd = ("cd '%s' && chafa '%s'"):format(dir, fileName)
           end
