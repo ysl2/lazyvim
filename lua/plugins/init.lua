@@ -1061,4 +1061,20 @@ return {
       vim.g.mkdp_combine_preview = 1
     end,
   },
+  {
+    "JunYang-tes/gemini-nvim",
+    custom = true,
+    keys = {
+      { "<C-9>", "<CMD>Gemini<CR>", mode = { "n", "t" }, silent = true, desc = "Toggle Gemini Window" },
+    },
+    opts = {
+      agents = {
+        {
+          name = "Gemini",
+          program = _G.localhost.GEMINI or "gemini",
+        },
+      },
+      toggle_keymap = "<C-9>",
+    },
+  },
 }
