@@ -489,100 +489,101 @@ return {
       },
     },
   },
-  {
-    "CopilotC-Nvim/CopilotChat.nvim",
-    keys = {
-      {
-        "<C-9>",
-        function()
-          return require("CopilotChat").toggle()
-        end,
-        desc = "Toggle (CopilotChat)",
-        mode = { "n", "v" },
-        remap = true,
-      },
-    },
-    build = "make tiktoken", -- Only on MacOS or Linux
-    opts = {
-      model = (_G.localhost.OPENAI_MODEL or os.getenv("OPENAI_MODEL") or "moonshotai/Kimi-K2-Instruct"),
-      window = {
-        layout = "float",
-        width = 0.8, -- fractional width of parent, or absolute width in columns when > 1
-        height = 0.8, -- fractional height of parent, or absolute height in rows when > 1
-      },
-      mappings = {
-        close = {
-          normal = "<C-9>",
-          insert = "<C-9>",
-        },
-        reset = {
-          callback = function()
-            require("CopilotChat").reset()
-            vim.defer_fn(function()
-              vim.cmd("startinsert")
-            end, 100)
-          end,
-        },
-      },
-      providers = {
-        openai = {
-          prepare_input = require("CopilotChat.config.providers").copilot.prepare_input,
-          prepare_output = require("CopilotChat.config.providers").copilot.prepare_output,
-          get_headers = function()
-            return {
-              ["Authorization"] = "Bearer " .. (_G.localhost.OPENAI_API_KEY or os.getenv("OPENAI_API_KEY")),
-            }
-          end,
-          get_models = function(headers)
-            local response, err = require("CopilotChat.utils").curl_get(
-              (_G.localhost.OPENAI_API_URL or os.getenv("OPENAI_API_URL") or "https://api.siliconflow.cn/v1")
-                .. "/models",
-              {
-                headers = headers,
-                json_response = true,
-              }
-            )
-            if err then
-              error(err)
-            end
-            return vim.tbl_map(function(model)
-              return {
-                id = model.id,
-                name = model.id,
-              }
-            end, response.body.data)
-          end,
-          embed = function(inputs, headers)
-            local response, err = require("CopilotChat.utils").curl_post(
-              (_G.localhost.OPENAI_API_URL or os.getenv("OPENAI_API_URL") or "https://api.siliconflow.cn/v1")
-                .. "/embeddings",
-              {
-                headers = headers,
-                json_request = true,
-                json_response = true,
-                body = {
-                  input = inputs,
-                  model = (
-                    _G.localhost.OPENAI_MODEL_EMBED
-                    or os.getenv("OPENAI_MODEL_EMBED")
-                    or "Qwen/Qwen3-Embedding-0.6B"
-                  ),
-                },
-              }
-            )
-            if err then
-              error(err)
-            end
-            return response.body.data
-          end,
-          get_url = function()
-            return (_G.localhost.OPENAI_API_URL or os.getenv("OPENAI_API_URL") or "https://api.siliconflow.cn/v1")
-              .. "/chat/completions"
-          end,
-        },
-      },
-    },
-  },
+  -- {
+  --   -- NOTE: "lazyvim.plugins.extras.ai.copilot-chat",
+  --   "CopilotC-Nvim/CopilotChat.nvim",
+  --   keys = {
+  --     {
+  --       "<C-9>",
+  --       function()
+  --         return require("CopilotChat").toggle()
+  --       end,
+  --       desc = "Toggle (CopilotChat)",
+  --       mode = { "n", "v" },
+  --       remap = true,
+  --     },
+  --   },
+  --   build = "make tiktoken", -- Only on MacOS or Linux
+  --   opts = {
+  --     model = (_G.localhost.OPENAI_MODEL or os.getenv("OPENAI_MODEL") or "moonshotai/Kimi-K2-Instruct"),
+  --     window = {
+  --       layout = "float",
+  --       width = 0.8, -- fractional width of parent, or absolute width in columns when > 1
+  --       height = 0.8, -- fractional height of parent, or absolute height in rows when > 1
+  --     },
+  --     mappings = {
+  --       close = {
+  --         normal = "<C-9>",
+  --         insert = "<C-9>",
+  --       },
+  --       reset = {
+  --         callback = function()
+  --           require("CopilotChat").reset()
+  --           vim.defer_fn(function()
+  --             vim.cmd("startinsert")
+  --           end, 100)
+  --         end,
+  --       },
+  --     },
+  --     providers = {
+  --       openai = {
+  --         prepare_input = require("CopilotChat.config.providers").copilot.prepare_input,
+  --         prepare_output = require("CopilotChat.config.providers").copilot.prepare_output,
+  --         get_headers = function()
+  --           return {
+  --             ["Authorization"] = "Bearer " .. (_G.localhost.OPENAI_API_KEY or os.getenv("OPENAI_API_KEY")),
+  --           }
+  --         end,
+  --         get_models = function(headers)
+  --           local response, err = require("CopilotChat.utils").curl_get(
+  --             (_G.localhost.OPENAI_API_URL or os.getenv("OPENAI_API_URL") or "https://api.siliconflow.cn/v1")
+  --               .. "/models",
+  --             {
+  --               headers = headers,
+  --               json_response = true,
+  --             }
+  --           )
+  --           if err then
+  --             error(err)
+  --           end
+  --           return vim.tbl_map(function(model)
+  --             return {
+  --               id = model.id,
+  --               name = model.id,
+  --             }
+  --           end, response.body.data)
+  --         end,
+  --         embed = function(inputs, headers)
+  --           local response, err = require("CopilotChat.utils").curl_post(
+  --             (_G.localhost.OPENAI_API_URL or os.getenv("OPENAI_API_URL") or "https://api.siliconflow.cn/v1")
+  --               .. "/embeddings",
+  --             {
+  --               headers = headers,
+  --               json_request = true,
+  --               json_response = true,
+  --               body = {
+  --                 input = inputs,
+  --                 model = (
+  --                   _G.localhost.OPENAI_MODEL_EMBED
+  --                   or os.getenv("OPENAI_MODEL_EMBED")
+  --                   or "Qwen/Qwen3-Embedding-0.6B"
+  --                 ),
+  --               },
+  --             }
+  --           )
+  --           if err then
+  --             error(err)
+  --           end
+  --           return response.body.data
+  --         end,
+  --         get_url = function()
+  --           return (_G.localhost.OPENAI_API_URL or os.getenv("OPENAI_API_URL") or "https://api.siliconflow.cn/v1")
+  --             .. "/chat/completions"
+  --         end,
+  --       },
+  --     },
+  --   },
+  -- },
   {
     "kawre/leetcode.nvim",
     custom = true,
