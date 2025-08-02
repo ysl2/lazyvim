@@ -35,10 +35,10 @@ end
 vim.keymap.set({ "i", "n", "s", "x" }, "<esc>", esc, { expr = true, desc = "Escape and Clear hlsearch" })
 -- vim.keymap.set({ "i", "n", "s", "x", "c", "o" }, "<C-c>", esc, { desc = "Escape and Clear hlsearch" })
 vim.keymap.set({ "i", "n", "s", "x", "c", "o" }, "<C-c>", "", { desc = "Disable <C-c>" })
-vim.keymap.set({ "n", "v" }, "<C-a>", "")
-vim.keymap.set({ "n", "v" }, "<C-x>", "")
-vim.keymap.set({ "n", "v" }, "<A-a>", "<C-a>", { desc = "Increment number under cursor" })
-vim.keymap.set({ "n", "v" }, "<A-x>", "<C-x>", { desc = "Decrement number under cursor" })
+-- vim.keymap.set({ "n", "v" }, "<C-a>", "")
+-- vim.keymap.set({ "n", "v" }, "<C-x>", "")
+-- vim.keymap.set({ "n", "v" }, "<A-a>", "<C-a>", { desc = "Increment number under cursor" })
+-- vim.keymap.set({ "n", "v" }, "<A-x>", "<C-x>", { desc = "Decrement number under cursor" })
 vim.cmd([[
 	" start of line
 	:cnoremap <C-A>		<Home>
