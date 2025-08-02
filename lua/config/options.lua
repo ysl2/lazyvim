@@ -31,6 +31,7 @@ vim.api.nvim_create_autocmd("InsertLeave", {
     vim.opt.timeoutlen = timeoutlen
   end,
 })
+vim.opt.breakindent = true
 
 -- === "g"s
 -- Allow copy paste in Neovide
