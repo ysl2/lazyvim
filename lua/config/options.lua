@@ -5,6 +5,8 @@
 -- ===
 -- === Set by myself
 -- ===
+
+-- === "opt"s
 pcall(vim.cmd, "autocmd! nvim.swapfile")
 vim.opt.lazyredraw = true
 vim.api.nvim_create_autocmd("BufWritePre", {
@@ -30,12 +32,15 @@ vim.api.nvim_create_autocmd("InsertLeave", {
   end,
 })
 
+-- === "g"s
 -- Allow copy paste in Neovide
 vim.g.neovide_input_use_logo = 1
 
--- ==
--- == Set by LazyVim, and modified by myself
--- ==
+-- ===
+-- === Set by LazyVim, and modified by myself
+-- ===
+
+-- === "opt"s
 vim.opt.clipboard = ""
 vim.opt.confirm = false
 vim.opt.autowrite = false
@@ -45,6 +50,7 @@ vim.opt.list = false
 -- Ref: https://www.reddit.com/r/vim/wiki/vimrctips/#wiki_do_not_use_smartindent
 vim.opt.smartindent = false
 
+-- filetype opts
 vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4
 vim.api.nvim_create_autocmd("FileType", {
@@ -69,6 +75,7 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+-- === "g"s
 vim.g.autoformat = false
 vim.g.snacks_animate = false
 vim.g.ai_cmp = false
