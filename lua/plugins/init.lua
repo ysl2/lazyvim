@@ -1025,15 +1025,15 @@ return {
   --     },
   --   },
   -- },
-  {
-    "dhruvasagar/vim-table-mode",
-    custom = true,
-    ft = "markdown",
-    cmd = "TableModeToggle",
-    keys = {
-      { "<leader>tm", "<Plug>TableModeToggle", desc = "Toggle table mode" },
-    },
-  },
+  -- {
+  --   "dhruvasagar/vim-table-mode",
+  --   custom = true,
+  --   ft = "markdown",
+  --   cmd = "TableModeToggle",
+  --   keys = {
+  --     { "<leader>tm", "<Plug>TableModeToggle", desc = "Toggle table mode" },
+  --   },
+  -- },
   {
     "hat0uma/csvview.nvim",
     custom = true,
