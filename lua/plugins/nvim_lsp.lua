@@ -53,6 +53,7 @@ return {
         "clang-format",
         -- "ty",
         "dockerfile-language-server",
+        "vim-language-server",
       },
     },
   },
