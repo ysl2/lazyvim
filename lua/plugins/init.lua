@@ -900,7 +900,7 @@ return {
       -- recommended settings
       default = {
         dir_path = function()
-          return "assets/" .. vim.fn.expand("%:t:r") .. "/img"
+          return ".assets/" .. vim.fn.expand("%:t:r") .. "/img"
         end,
         relative_to_current_file = true,
         -- drag_and_drop = {
