@@ -1058,9 +1058,11 @@ return {
   },
   {
     "iamcco/markdown-preview.nvim",
-    init = function()
+    init = function() -- NOTE: Must be `init` here, otherwise it will complain.
       vim.g.mkdp_auto_close = 0
       vim.g.mkdp_combine_preview = 1
+      vim.g.mkdp_echo_preview_url = 1
+      vim.g.mkdp_open_to_the_world = 1
     end,
   },
   {
