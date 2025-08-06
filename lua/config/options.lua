@@ -7,7 +7,8 @@
 -- ===
 
 -- === "opt"s
-pcall(vim.cmd, "autocmd! nvim.swapfile")
+-- pcall(vim.cmd, "autocmd! nvim.swapfile")
+pcall(vim.api.nvim_del_augroup_by_name, "nvim.swapfile")
 vim.opt.lazyredraw = true
 vim.api.nvim_create_autocmd("BufWritePre", {
   callback = function()
