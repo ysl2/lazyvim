@@ -306,6 +306,14 @@ return {
         end,
         desc = "Run custom command in snacks terminal.",
       },
+      {
+        "<C-9>",
+        function()
+          Snacks.terminal(_G.localhost.GEMINI or "gemini", { cwd = LazyVim.root(), interactive = true })
+        end,
+        mode = { "n", "t" },
+        desc = "Run gemini in snacks terminal.",
+      },
     },
     opts = {
       notifier = { enabled = false },
@@ -1065,20 +1073,20 @@ return {
       vim.g.mkdp_open_to_the_world = 1
     end,
   },
-  {
-    "JunYang-tes/gemini-nvim",
-    custom = true,
-    keys = {
-      { "<C-9>", "<CMD>Gemini<CR>", mode = { "n", "t" }, silent = true, desc = "Toggle Gemini Window" },
-    },
-    opts = {
-      agents = {
-        {
-          name = "Gemini",
-          program = _G.localhost.GEMINI or "gemini",
-        },
-      },
-      toggle_keymap = "<C-9>",
-    },
-  },
+  -- {
+  --   "JunYang-tes/gemini-nvim",
+  --   custom = true,
+  --   keys = {
+  --     { "<C-9>", "<CMD>Gemini<CR>", mode = { "n", "t" }, silent = true, desc = "Toggle Gemini Window" },
+  --   },
+  --   opts = {
+  --     agents = {
+  --       {
+  --         name = "Gemini",
+  --         program = _G.localhost.GEMINI or "gemini",
+  --       },
+  --     },
+  --     toggle_keymap = "<C-9>",
+  --   },
+  -- },
 }
