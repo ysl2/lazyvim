@@ -483,6 +483,19 @@ return {
     },
   },
   {
+    "lewis6991/gitsigns.nvim",
+    opts = function()
+      -- Check if we need to reload the gitsigns when it changed
+      vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
+        callback = function()
+          if package.loaded["gitsigns"] and vim.o.buftype ~= "nofile" then
+            require("gitsigns").reset_base()
+          end
+        end,
+      })
+    end,
+  },
+  {
     "akinsho/bufferline.nvim",
     opts = {
       options = {

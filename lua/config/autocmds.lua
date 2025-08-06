@@ -8,15 +8,6 @@
 -- e.g. vim.api.nvim_del_augroup_by_name("lazyvim_wrap_spell")
 vim.api.nvim_del_augroup_by_name("lazyvim_wrap_spell")
 
--- Check if we need to reload the gitsigns when it changed
-vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
-  callback = function()
-    if package.loaded["gitsigns"] and vim.o.buftype ~= "nofile" then
-      require("gitsigns").reset_base()
-    end
-  end,
-})
-
 -- Auto delete [No Name] buffers.
 vim.api.nvim_create_autocmd("BufLeave", {
   callback = function(args)
