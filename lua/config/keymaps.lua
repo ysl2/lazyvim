@@ -124,3 +124,7 @@ end, { silent = true, desc = "Diff off all buffers" })
 vim.keymap.set("n", "<D-v>", '"+p<CR>', { noremap = true, silent = true })
 vim.keymap.set({ "i", "t" }, "<D-v>", "<C-R>+", { noremap = true, silent = true })
 vim.keymap.set("v", "<D-c>", '"+y<CR>', { noremap = true, silent = true })
+
+-- Ref: https://github.com/kevinhwang91/rnvimr/issues/76#issuecomment-1677064899
+vim.cmd("cabbrev wqa wa\\|qa")
+vim.cmd("cabbrev xa wa\\|qa")
