@@ -333,6 +333,14 @@ return {
       {
         "<C-9>",
         function()
+          Snacks.terminal("lf", { cwd = LazyVim.root(), interactive = true })
+        end,
+        mode = { "n", "t" },
+        desc = "Run lf in snacks terminal",
+      },
+      {
+        "<C-0>",
+        function()
           Snacks.terminal(_G.localhost.GEMINI or "gemini", { cwd = LazyVim.root(), interactive = true })
         end,
         mode = { "n", "t" },
