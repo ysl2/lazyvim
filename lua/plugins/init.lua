@@ -217,6 +217,7 @@ return {
     },
     opts = {
       -- close_if_last_window = true,
+      log_level = "warn",
       -- sort_case_insensitive = true,
       default_component_configs = {
         symlink_target = {
