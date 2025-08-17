@@ -76,6 +76,12 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.opt_local.commentstring = "# %s"
   end,
 })
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "zsh",
+  callback = function()
+    vim.opt.filetype = "sh"
+  end,
+})
 
 -- === "g"s
 vim.g.autoformat = false
