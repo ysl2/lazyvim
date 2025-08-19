@@ -54,6 +54,7 @@ return {
         -- "ty",
         "dockerfile-language-server",
         "vim-language-server",
+        "html-lsp",
       },
     },
   },
@@ -280,6 +281,7 @@ return {
         tex = { "latexindent" },
         c = { "clang_format" },
         cpp = { "clang_format" },
+        html = { "html-lsp" },
       },
       formatters = {
         -- Ref: https://github.com/LazyVim/LazyVim/discussions/3734
