@@ -1181,4 +1181,18 @@ return {
   --     toggle_keymap = "<C-9>",
   --   },
   -- },
+  {
+    "Zeioth/markmap.nvim",
+    -- NOTE: Forks:
+    -- https://github.com/Zeioth/markmap.nvim/compare/main...qmrodgers:markmap.nvim:main
+    -- https://github.com/Zeioth/markmap.nvim/compare/main...nixenjoyer:markmap.nvim:feat/markmap_cmd-in-config
+    -- https://github.com/MarcoBuess/markmap.nvim/compare/main...kirasok:markmap.nvim:main
+    -- https://github.com/Zeioth/markmap.nvim/compare/main...MarcoBuess:markmap.nvim:feat/mms-default-path
+    -- https://github.com/Zeioth/markmap.nvim/compare/main...MarcoBuess:markmap.nvim:main
+    -- https://github.com/Zeioth/markmap.nvim/pull/8/files
+    -- https://github.com/Zeioth/markmap.nvim/pull/6/files
+    build = "npm install -g markmap-cli",
+    cmd = { "MarkmapOpen", "MarkmapSave", "MarkmapWatch", "MarkmapWatchStop" },
+    opts = {}, -- NOTE: Must manually declare this.
+  },
 }
