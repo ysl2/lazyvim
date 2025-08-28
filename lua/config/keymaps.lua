@@ -94,6 +94,12 @@ end, { expr = true, silent = true, desc = "Half Page Down (Smart Wrap)" })
 vim.keymap.set({ "n", "v" }, "<C-u>", function()
   return vim.opt.wrap:get() and "<C-u>g0" or "<C-u>"
 end, { expr = true, silent = true, desc = "Half Page Up (Smart Wrap)" })
+vim.keymap.set({ "n", "v" }, "gg", function()
+  return vim.opt.wrap:get() and "gg0" or "gg"
+end, { expr = true, silent = true, desc = "First Line (Smart Wrap)" })
+vim.keymap.set({ "n", "v" }, "G", function()
+  return vim.opt.wrap:get() and "G$g0" or "G"
+end, { expr = true, silent = true, desc = "Last Line (Smart Wrap)" })
 
 -- Diffview
 vim.keymap.set("n", "<leader>da", function()
