@@ -82,6 +82,12 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.opt.filetype = "sh"
   end,
 })
+vim.api.nvim_create_autocmd("BufEnter", {
+  pattern = "*.tgn",
+  callback = function()
+    vim.opt.filetype = "json"
+  end,
+})
 
 -- === "g"s
 vim.g.autoformat = false
