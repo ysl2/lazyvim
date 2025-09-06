@@ -983,7 +983,6 @@ return {
     -- support for image pasting
     "HakonHarnes/img-clip.nvim",
     custom = true,
-    event = "VeryLazy",
     keys = {
       -- suggested keymap
       {
@@ -1011,7 +1010,7 @@ return {
       },
       filetypes = {
         markdown = {
-          template = '<img width=100% alt="$CURSOR" src="$FILE_PATH" />',
+          template = '<p><img src="$FILE_PATH" alt="$CURSOR" width=100% style="display: block; margin: auto;"></p>',
         },
       },
     },
