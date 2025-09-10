@@ -1,3 +1,13 @@
+local function exec(cmd)
+  local file = io.popen(cmd)
+  if not file then
+    return
+  end
+  local output = file:read("*a")
+  file:close()
+  return (output or ""):match("^%s*(.-)%s*$")
+end
+
 return {
   -- Colorschemes
   {
@@ -284,30 +294,82 @@ return {
       {
         "<leader>dr",
         function()
-          local ft = vim.opt.filetype:get()
-          local dir = vim.fn.expand("%:p:h")
-          local fileName = vim.fn.expand("%:t")
-          local fileNameWithoutExt = vim.fn.expand("%:t:r")
+          local fileType = vim.opt.filetype:get()
           local fileExt = vim.fn.expand("%:e")
+
+          local fileDir = vim.fn.expand("%:p:h")
+          local fileNameWithoutExt = vim.fn.expand("%:t:r")
+          local fileName = vim.fn.expand("%:t")
+          local filePath = vim.fn.expand("%:p")
+
+          local tmpFileDir = "/tmp/lf-img" .. fileDir
+          local tmpFileNameWithoutExt = exec("sha256sum '" .. filePath .. "' | awk '{print $1}'")
+          local tmpFileName = tmpFileNameWithoutExt .. ".png"
+          local tmpFilePath = tmpFileDir .. "/" .. tmpFileName
+
           local cmd
 
           if fileName == "Makefile" then
-            cmd = ("cd '%s' && make"):format(dir)
-          elseif ft == "pdf" then
-            cmd = ("cd '%s' && pdftoppm -f 1 -l 1 -png '%s' > '/tmp/%s.png' && chafa '/tmp/%s.png'"):format(
-              dir,
+            cmd = ("cd '%s'; make"):format(fileDir)
+          elseif fileExt == "png" or fileExt == "jpg" or fileExt == "gif" or fileExt == "svg" then
+            cmd = ("cd '%s'; chafa '%s'"):format(fileDir, fileName)
+          elseif fileExt == "drawio" then
+            cmd = ("cd '%s'; [ ! -f '%s' ] && mkdir -p '%s' && drawio '%s' --no-sandbox -x -f png -s 0.75 -o '%s' >/dev/null; chafa '%s'"):format(
+              fileDir,
+              tmpFilePath,
+              tmpFileDir,
+              fileName,
+              tmpFilePath,
+              tmpFilePath
+            )
+          elseif
+            fileExt == "doc"
+            or fileExt == "docx"
+            or fileExt == "ppt"
+            or fileExt == "pptx"
+            or fileExt == "xls"
+            or fileExt == "xlsx"
+          then
+            local tmp
+            if fileExt == "doc" or fileExt == "docx" then
+              tmp = "writer_pdf_Export"
+            elseif fileExt == "ppt" or fileExt == "pptx" then
+              tmp = "impress_pdf_Export"
+            elseif fileExt == "xls" or fileExt == "xlsx" then
+              tmp = "calc_pdf_Export"
+            end
+            cmd = ([[cd '%s'; [ ! -f '%s' ] && mkdir -p '%s' && libreoffice --headless --convert-to 'pdf:%s:{"PageRange":{"type":"string","value":"1"},"Quality":{"type":"long","value":"25"},"MaxImageResolution":{"type":"long","value":"75"}}' --outdir '%s' '%s' >/dev/null && mv '%s' '%s' && pdftoppm -f 1 -l 1 -png -r 72 -aa no -aaVector no '%s' >'%s'; chafa '%s']]):format(
+              fileDir,
+              tmpFilePath,
+              tmpFileDir,
+              tmp,
+              tmpFileDir,
+              fileName,
+              tmpFileDir .. "/" .. fileNameWithoutExt .. ".pdf",
+              tmpFileDir .. "/" .. tmpFileNameWithoutExt .. ".pdf",
+              tmpFileDir .. "/" .. tmpFileNameWithoutExt .. ".pdf",
+              tmpFilePath,
+              tmpFilePath
+            )
+          elseif fileType == "pdf" then
+            cmd = ("cd '%s'; [ ! -f '%s' ] && pdftoppm -f 1 -l 1 -png -r 72 -aa no -aaVector no '%s' >'%s'; chafa '%s'"):format(
+              fileDir,
+              tmpFilePath,
+              fileName,
+              tmpFilePath,
+              tmpFilePath
+            )
+          elseif fileType == "python" then
+            cmd = ("cd '%s'; python '%s'"):format(fileDir, fileName)
+          elseif fileType == "sh" then
+            cmd = ("cd '%s'; bash '%s'"):format(fileDir, fileName)
+          elseif fileType == "c" then
+            cmd = ("cd '%s'; gcc '%s' -o '%s' && './%s'"):format(
+              fileDir,
               fileName,
               fileNameWithoutExt,
               fileNameWithoutExt
             )
-          elseif ft == "python" then
-            cmd = ("cd '%s' && python '%s'"):format(dir, fileName)
-          elseif ft == "sh" then
-            cmd = ("cd '%s' && bash '%s'"):format(dir, fileName)
-          elseif ft == "c" then
-            cmd = ("cd '%s' && gcc %s -o %s && ./%s"):format(dir, fileName, fileNameWithoutExt, fileNameWithoutExt)
-          elseif fileExt == "png" or fileExt == "jpg" or fileExt == "gif" or fileExt == "svg" then
-            cmd = ("cd '%s' && chafa '%s'"):format(dir, fileName)
           end
           if not cmd then
             return
