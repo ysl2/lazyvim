@@ -100,6 +100,9 @@ end, { expr = true, silent = true, desc = "First Line (Smart Wrap)" })
 vim.keymap.set({ "n", "v" }, "G", function()
   return vim.opt.wrap:get() and "G$g0" or "G"
 end, { expr = true, silent = true, desc = "Last Line (Smart Wrap)" })
+vim.keymap.set({ "n", "v" }, "gV", function()
+  return vim.opt.wrap:get() and "g0vg$" or nil
+end, { expr = true, silent = true, desc = "Select Line (Smart Wrap)" })
 
 -- Diffview
 vim.keymap.set("n", "<leader>da", function()
