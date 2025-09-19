@@ -162,9 +162,11 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     opts = function()
-      local parsers = require("nvim-treesitter.parsers").get_parser_configs()
+      local parsers = require("nvim-treesitter.parsers")
       for _, p in pairs(parsers) do
-        p.install_info.url = p.install_info.url:gsub("https://github.com/", "https://ghfast.top/https://github.com/")
+        if type(p) == "table" and p.install_info and p.install_info.url then
+          p.install_info.url = p.install_info.url:gsub("^https://github.com/", "https://ghfast.top/https://github.com/")
+        end
       end
     end,
   },
