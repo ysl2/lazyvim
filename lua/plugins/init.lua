@@ -936,7 +936,10 @@ return {
     },
   },
   {
+    -- NOTE: This plugin is imported by LazyVim.
+    -- So if you want to disable it, you need to set `enabled = false` here. Not just comment it out.
     "MeanderingProgrammer/render-markdown.nvim",
+    -- NOTE: Disable it for now since it messes up with markdown, and I don't use Avante now.
     enabled = false,
     -- ft = { "markdown", "norg", "rmd", "org", "Avante" },
     ft = "Avante",
