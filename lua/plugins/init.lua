@@ -112,53 +112,53 @@ return {
     },
   },
   { "folke/noice.nvim", enabled = false },
-  {
-    "nvim-treesitter/nvim-treesitter",
-    dependencies = {
-      "yioneko/nvim-yati",
-      "yioneko/vim-tmindent",
-    },
-    opts = {
-      -- highlight = { additional_vim_regex_highlighting = { "python" } },
-      -- NOTE: The disabled languages will use the nvim-yati indent method.
-      -- Also, add the language to `tm_fts` in the `default_fallback` function.
-      -- Check here for all available languages by nvim-yati: https://github.com/yioneko/nvim-yati/tree/main/lua/nvim-yati/configs
-      indent = { disable = { "python" } },
-      incremental_selection = {
-        enable = true,
-        keymaps = {
-          init_selection = "<cr>",
-          node_incremental = "<cr>",
-          scope_incremental = false,
-          node_decremental = "<bs>",
-        },
-      },
-      yati = {
-        enable = true,
-        suppress_conflict_warning = true,
-        -- Disable by languages, see `Supported languages`
-        -- disable = { "python" },
-
-        -- Whether to enable lazy mode (recommend to enable this if bad indent happens frequently)
-        default_lazy = true,
-
-        -- Determine the fallback method used when we cannot calculate indent by tree-sitter
-        --   "auto": fallback to vim auto indent
-        --   "asis": use current indent as-is
-        --   "cindent": see `:h cindent()`
-        -- Or a custom function return the final indent result.
-        -- default_fallback = "auto"
-        default_fallback = function(lnum, computed, bufnr)
-          local tm_fts = { "python" } -- or any other langs
-          if vim.tbl_contains(tm_fts, vim.bo[bufnr].filetype) then
-            return require("tmindent").get_indent(lnum, bufnr) + computed
-          end
-          -- or any other fallback methods
-          return require("nvim-yati.fallback").vim_auto(lnum, computed, bufnr)
-        end,
-      },
-    },
-  },
+  -- {
+  --   "nvim-treesitter/nvim-treesitter",
+  --   dependencies = {
+  --     "yioneko/nvim-yati",
+  --     "yioneko/vim-tmindent",
+  --   },
+  --   opts = {
+  --     -- highlight = { additional_vim_regex_highlighting = { "python" } },
+  --     -- NOTE: The disabled languages will use the nvim-yati indent method.
+  --     -- Also, add the language to `tm_fts` in the `default_fallback` function.
+  --     -- Check here for all available languages by nvim-yati: https://github.com/yioneko/nvim-yati/tree/main/lua/nvim-yati/configs
+  --     indent = { disable = { "python" } },
+  --     incremental_selection = {
+  --       enable = true,
+  --       keymaps = {
+  --         init_selection = "<cr>",
+  --         node_incremental = "<cr>",
+  --         scope_incremental = false,
+  --         node_decremental = "<bs>",
+  --       },
+  --     },
+  --     yati = {
+  --       enable = true,
+  --       suppress_conflict_warning = true,
+  --       -- Disable by languages, see `Supported languages`
+  --       -- disable = { "python" },
+  --
+  --       -- Whether to enable lazy mode (recommend to enable this if bad indent happens frequently)
+  --       default_lazy = true,
+  --
+  --       -- Determine the fallback method used when we cannot calculate indent by tree-sitter
+  --       --   "auto": fallback to vim auto indent
+  --       --   "asis": use current indent as-is
+  --       --   "cindent": see `:h cindent()`
+  --       -- Or a custom function return the final indent result.
+  --       -- default_fallback = "auto"
+  --       default_fallback = function(lnum, computed, bufnr)
+  --         local tm_fts = { "python" } -- or any other langs
+  --         if vim.tbl_contains(tm_fts, vim.bo[bufnr].filetype) then
+  --           return require("tmindent").get_indent(lnum, bufnr) + computed
+  --         end
+  --         -- or any other fallback methods
+  --         return require("nvim-yati.fallback").vim_auto(lnum, computed, bufnr)
+  --       end,
+  --     },
+  --   },
+  -- },
   {
     "nvim-treesitter/nvim-treesitter",
     opts = function()
