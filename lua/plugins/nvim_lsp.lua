@@ -182,6 +182,7 @@ return {
         update_in_insert = true,
       },
       inlay_hints = { enabled = false },
+      folds = { enabled = false },
     },
   },
   {
