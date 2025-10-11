@@ -76,7 +76,7 @@ return {
   {
     "saghen/blink.cmp",
     opts = function(_, opts)
-      -- From upstream: remove the "ai_accept" because I use `<C-g>` for ai completion.
+      -- From upstream: remove the "ai_accept" because I use `<C-l>` for ai completion.
       if not opts.keymap["<Tab>"] then
         if opts.keymap.preset == "super-tab" then -- super-tab
           opts.keymap["<Tab>"] = {
@@ -90,6 +90,12 @@ return {
             "fallback",
           }
         end
+      end
+      if not opts.keymap["<C-l>"] then
+        opts.keymap["<C-l>"] = {
+          LazyVim.cmp.map({ "ai_nes", "ai_accept" }),
+          "fallback",
+        }
       end
     end,
   },
@@ -237,8 +243,11 @@ return {
         },
         mapping = cmp.mapping.preset.insert({
           ["<tab>"] = function(fallback)
-            -- From upstream: remove the "ai_accept" because I use `<C-g>` for ai completion.
+            -- From upstream: remove the "ai_accept" because I use `<C-l>` for ai completion.
             return LazyVim.cmp.map({ "snippet_forward" }, fallback)()
+          end,
+          ["<C-l>"] = function(fallback)
+            return LazyVim.cmp.map({ "ai_nes", "ai_accept" }, fallback)()
           end,
         }),
       }

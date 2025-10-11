@@ -643,16 +643,16 @@ return {
       nearest_float_when = "never",
     },
   },
-  {
-    "zbirenbaum/copilot.lua",
-    opts = {
-      suggestion = {
-        keymap = {
-          accept_line = "<C-l>",
-        },
-      },
-    },
-  },
+  -- {
+  --   "zbirenbaum/copilot.lua",
+  --   opts = {
+  --     suggestion = {
+  --       keymap = {
+  --         accept_line = "<C-l>",
+  --       },
+  --     },
+  --   },
+  -- },
   -- {
   --   -- NOTE: "lazyvim.plugins.extras.ai.copilot-chat",
   --   "CopilotC-Nvim/CopilotChat.nvim",
