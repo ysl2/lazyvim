@@ -88,6 +88,12 @@ vim.api.nvim_create_autocmd("BufEnter", {
     vim.opt.filetype = "json"
   end,
 })
+vim.api.nvim_create_autocmd("BufEnter", {
+  pattern = "*.pinescript",
+  callback = function()
+    vim.opt.filetype = "psl"
+  end,
+})
 
 -- === "g"s
 vim.g.autoformat = false

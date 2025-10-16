@@ -1261,4 +1261,17 @@ return {
     cmd = { "MarkmapOpen", "MarkmapSave", "MarkmapWatch", "MarkmapWatchStop" },
     opts = {}, -- NOTE: Must manually declare this.
   },
+  {
+    "jbmorgado/vim-pine-script",
+    custom = true,
+    ft = "psl",
+    config = function()
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "psl",
+        callback = function()
+          vim.opt_local.commentstring = "// %s"
+        end,
+      })
+    end,
+  },
 }
