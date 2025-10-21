@@ -1259,4 +1259,15 @@ return {
     cmd = { "MarkmapOpen", "MarkmapSave", "MarkmapWatch", "MarkmapWatchStop" },
     opts = {}, -- NOTE: Must manually declare this.
   },
+  {
+    "linux-cultist/venv-selector.nvim",
+    commit = "4550d0b5a80757caf5ced9658b2d9d171b5c02d8",
+    opts = {
+      settings = {
+        options = {
+          notify_user_on_venv_activation = false,
+        },
+      },
+    },
+  },
 }
