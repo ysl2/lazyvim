@@ -1202,7 +1202,11 @@ return {
   {
     "hat0uma/csvview.nvim",
     custom = true,
+    ft = "csv",
     cmd = { "CsvViewEnable", "CsvViewDisable", "CsvViewToggle" },
+    keys = {
+      { "<leader>cv", "<CMD>CsvViewToggle<CR>", mode = "n", silent = true, desc = "Toggle CsvView" },
+    },
     opts = {
       parser = { comments = { "#", "//" } },
       keymaps = {
