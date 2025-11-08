@@ -649,6 +649,7 @@ return {
           accept_line = "<C-l>",
         },
       },
+      disable_limit_reached_message = true,
     },
   },
   -- {
