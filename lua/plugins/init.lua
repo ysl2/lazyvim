@@ -288,7 +288,7 @@ return {
           end
           Snacks.terminal(cmd, { cwd = LazyVim.root() })
         end,
-        mode = { "n", "t" },
+        mode = { "n", "i", "v", "t" },
         desc = "Tmux (Root Dir)",
       },
       {
