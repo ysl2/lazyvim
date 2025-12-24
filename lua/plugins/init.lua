@@ -114,6 +114,7 @@ return {
   { "folke/noice.nvim", enabled = false },
   {
     "nvim-treesitter/nvim-treesitter",
+    branch = "master",
     dependencies = {
       "yioneko/nvim-yati",
       "yioneko/vim-tmindent",
