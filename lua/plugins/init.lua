@@ -1288,4 +1288,13 @@ return {
       })
     end,
   },
+  {
+    "nwiizo/marp.nvim",
+    custom = true,
+    opts = {
+      marp_command = "",
+      show_tips = false,
+      suggest_gitignore = false,
+    },
+  },
 }
