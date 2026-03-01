@@ -978,7 +978,7 @@ return {
     },
     opts = {
       float_diff = false,
-      layout = "left_left_bottom",
+      layout = "left_bottom",
       position = "right",
     },
     config = function(_, opts)
