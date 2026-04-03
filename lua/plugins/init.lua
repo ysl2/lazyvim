@@ -252,6 +252,8 @@ return {
       window = {
         width = "20%",
         mappings = {
+          ["l"] = "open_with_window_picker",
+          ["w"] = "",
           ["s"] = "split_with_window_picker",
           ["S"] = "",
           ["v"] = "vsplit_with_window_picker",
