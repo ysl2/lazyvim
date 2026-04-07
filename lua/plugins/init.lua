@@ -182,7 +182,7 @@ return {
     end,
   },
   {
-    "s1n7ax/nvim-window-picker",
+    "ysl2/nvim-window-picker",
     custom = true,
     keys = {
       {
@@ -207,7 +207,7 @@ return {
   },
   {
     "nvim-neo-tree/neo-tree.nvim",
-    dependencies = "s1n7ax/nvim-window-picker",
+    dependencies = "ysl2/nvim-window-picker",
     keys = {
       -- Switch `<leader>e` and `<leader>E`, and add wincmd = for <leader>e.
       {
