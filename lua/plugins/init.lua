@@ -541,7 +541,9 @@ return {
         callback = function()
           local persistence = require("persistence")
           if vim.fn.argc() == 0 and not vim.g.started_with_stdin then
-            persistence.load()
+            vim.schedule(function()
+              persistence.load()
+            end)
           else
             persistence.stop()
           end
@@ -586,13 +588,11 @@ return {
     custom = true,
     -- version = "*", -- Use for stability; omit to use `main` branch for the latest features
     event = "VeryLazy",
-    opts = {
-      -- Configuration here, or leave empty to use defaults
-      keymaps = {
-        insert = "<A-g>s",
-        insert_line = "<A-g>S",
-      },
-    },
+    config = function()
+      vim.g.nvim_surround_no_insert_mappings = true
+      vim.keymap.set("i", "<A-g>s", "<Plug>(nvim-surround-insert)")
+      vim.keymap.set("i", "<A-g>S", "<Plug>(nvim-surround-insert-line)")
+    end,
   },
   {
     "smoka7/hop.nvim",
