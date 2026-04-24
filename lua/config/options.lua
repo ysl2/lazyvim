@@ -12,6 +12,7 @@ pcall(vim.api.nvim_del_augroup_by_name, "nvim.swapfile")
 vim.opt.lazyredraw = true
 vim.opt.autoread = true
 vim.api.nvim_create_autocmd("BufWritePre", {
+  group = vim.api.nvim_create_augroup("custom_fileformat", { clear = true }),
   callback = function()
     vim.opt.fileformat = "unix"
   end,
@@ -19,13 +20,16 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 -- Ref: https://www.reddit.com/r/neovim/comments/35h1g1/comment/cr4clpu/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
 vim.opt.ttimeoutlen = 0
 local timeoutlen
+local augroup_custom_timeoutlen = vim.api.nvim_create_augroup("custom_timeoutlen", { clear = true })
 vim.api.nvim_create_autocmd("InsertEnter", {
+  group = augroup_custom_timeoutlen,
   callback = function()
     timeoutlen = vim.opt.timeoutlen:get()
     vim.opt.timeoutlen = 0
   end,
 })
 vim.api.nvim_create_autocmd("InsertLeave", {
+  group = augroup_custom_timeoutlen,
   callback = function()
     if not timeoutlen then
       return
@@ -56,8 +60,10 @@ vim.opt.smartindent = false
 -- filetype opts
 vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4
+local augroup_custom_filetype = vim.api.nvim_create_augroup("custom_filetype", { clear = true })
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "lua", "typescript", "javascript", "json", "jsonc" },
+  group = augroup_custom_filetype,
   callback = function()
     vim.opt_local.tabstop = 2
     vim.opt_local.shiftwidth = 2
@@ -65,6 +71,7 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "tex",
+  group = augroup_custom_filetype,
   callback = function()
     vim.opt_local.expandtab = false
     -- Ref: https://vi.stackexchange.com/a/34778
@@ -73,24 +80,28 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "nu",
+  group = augroup_custom_filetype,
   callback = function()
     vim.opt_local.commentstring = "# %s"
   end,
 })
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "zsh",
+  group = augroup_custom_filetype,
   callback = function()
     vim.opt.filetype = "sh"
   end,
 })
 vim.api.nvim_create_autocmd("BufEnter", {
   pattern = "*.tgn",
+  group = augroup_custom_filetype,
   callback = function()
     vim.opt.filetype = "json"
   end,
 })
 vim.api.nvim_create_autocmd("BufEnter", {
   pattern = "*.pinescript",
+  group = augroup_custom_filetype,
   callback = function()
     vim.opt.filetype = "psl"
   end,

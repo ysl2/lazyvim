@@ -61,6 +61,7 @@ return {
     opts = {
       colorscheme = (function()
         vim.api.nvim_create_autocmd("ColorScheme", {
+          group = vim.api.nvim_create_augroup("custom_colorscheme", { clear = true }),
           callback = function()
             -- For search
             local opts = { reverse = true }
@@ -177,6 +178,7 @@ return {
     config = function()
       vim.cmd("hi link UnwantedTrailerTrash NONE")
       vim.api.nvim_create_autocmd("BufWritePre", {
+        group = vim.api.nvim_create_augroup("custom_trailertrash", { clear = true }),
         command = "TrailerTrim",
       })
     end,
@@ -447,6 +449,7 @@ return {
         -- TODO: No effect on VimEnter, so disable it for now. Need to further investigate.
         -- vim.api.nvim_create_autocmd({ "VimEnter", "VimLeave" }, {
         vim.api.nvim_create_autocmd("VimLeave", {
+          group = vim.api.nvim_create_augroup("custom_tmux", { clear = true }),
           callback = function(args)
             local tmux = _G.localhost.MYTMUX or os.getenv("MYTMUX")
             tmux = tmux ~= "" and tmux or "tmux"
@@ -494,7 +497,9 @@ return {
     -- Explanation: https://github.com/folke/lazy.nvim/discussions/463#discussioncomment-4819297
     cond = not not vim.g.started_by_firenvim,
     config = function() -- NOTE: Must be in `config` instead of `opts`, otherwise firenvim will complain.
+      local augroup_custom_firenvim = vim.api.nvim_create_augroup("custom_firenvim", { clear = true })
       vim.api.nvim_create_autocmd("UIEnter", {
+        group = augroup_custom_firenvim,
         callback = function()
           local client = vim.api.nvim_get_chan_info(vim.v.event.chan).client
           if client and client.name == "Firenvim" then
@@ -506,12 +511,14 @@ return {
       })
       vim.api.nvim_create_autocmd("BufEnter", {
         pattern = { "github.com_*.txt", "gitee.com_*.txt" },
+        group = augroup_custom_firenvim,
         callback = function()
           vim.opt.filetype = "markdown"
         end,
       })
       vim.api.nvim_create_autocmd("BufEnter", {
         pattern = { "leetcode.com_*.txt", "leetcode.cn_*.txt" },
+        group = augroup_custom_firenvim,
         callback = function()
           vim.opt.filetype = "python"
           vim.opt.expandtab = true
@@ -538,6 +545,7 @@ return {
       -- Auto restore session
       vim.api.nvim_create_autocmd("VimEnter", {
         nested = true,
+        group = vim.api.nvim_create_augroup("custom_persistence", { clear = true }),
         callback = function()
           local persistence = require("persistence")
           if vim.fn.argc() == 0 and not vim.g.started_with_stdin then
@@ -563,7 +571,16 @@ return {
     "lewis6991/gitsigns.nvim",
     opts = function()
       -- Check if we need to reload the gitsigns when it changed
-      vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
+      vim.api.nvim_create_autocmd({
+        "FocusGained",
+        "TermClose",
+        "TermLeave",
+        "BufEnter",
+        -- "CursorHold",
+        -- "CursorHoldI",
+        "ShellCmdPost",
+      }, {
+        group = vim.api.nvim_create_augroup("custom_gitsigns", { clear = true }),
         callback = function()
           if package.loaded["gitsigns"] and vim.o.buftype ~= "nofile" then
             require("gitsigns").reset_base()
@@ -989,6 +1006,7 @@ return {
 
       vim.api.nvim_create_autocmd("FileType", {
         pattern = "undotreeDiff",
+        group = vim.api.nvim_create_augroup("custom_undotree", { clear = true }),
         callback = function()
           vim.keymap.set("n", "<C-w>q", function()
             undotree.toggle()
@@ -1005,6 +1023,7 @@ return {
       -- Ref: https://github.com/andis-sprinkis/lf-vim/compare/master...sarmong:lf-vim:master
       vim.api.nvim_create_autocmd("FileType", {
         pattern = "lf",
+        group = vim.api.nvim_create_augroup("custom_lf", { clear = true }),
         callback = function()
           vim.opt_local.commentstring = "# %s"
         end,
@@ -1022,6 +1041,7 @@ return {
     opts = function()
       vim.api.nvim_create_autocmd("FileType", {
         pattern = "trouble",
+        group = vim.api.nvim_create_augroup("custom_trouble", { clear = true }),
         callback = function()
           vim.keymap.set("n", "<C-w>q", "q", { silent = true, buffer = true, remap = true })
         end,
@@ -1284,6 +1304,7 @@ return {
     config = function()
       vim.api.nvim_create_autocmd("FileType", {
         pattern = "psl",
+        group = vim.api.nvim_create_augroup("custom_pinescript", { clear = true }),
         callback = function()
           vim.opt_local.commentstring = "// %s"
         end,
