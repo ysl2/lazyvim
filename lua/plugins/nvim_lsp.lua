@@ -193,19 +193,18 @@ return {
   {
     "neovim/nvim-lspconfig",
     opts = function()
-      vim.api.nvim_create_autocmd("LspAttach", {
-        callback = function(ev)
-          vim.api.nvim_create_autocmd("CursorHold", {
-            buffer = ev.buf,
-            callback = function()
-              vim.diagnostic.open_float(nil, {
-                focusable = false,
-                close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
-                source = "always",
-                prefix = " ",
-                scope = "cursor",
-              })
-            end,
+      vim.api.nvim_create_autocmd("CursorHold", {
+        group = vim.api.nvim_create_augroup("custom_lspconfig", { clear = true }),
+        callback = function(args)
+          if #vim.lsp.get_clients({ bufnr = args.buf }) == 0 then
+            return
+          end
+          vim.diagnostic.open_float(nil, {
+            focusable = false,
+            close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+            source = "always",
+            prefix = " ",
+            scope = "cursor",
           })
         end,
       })

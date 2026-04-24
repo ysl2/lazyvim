@@ -29,6 +29,7 @@ vim.api.nvim_create_autocmd({
 
 -- Auto delete [No Name] buffers.
 vim.api.nvim_create_autocmd("BufLeave", {
+  group = vim.api.nvim_create_augroup("custom_bufdelete", { clear = true }),
   callback = function(args)
     if
       vim.api.nvim_buf_get_name(args.buf) == ""
