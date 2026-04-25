@@ -193,7 +193,7 @@ return {
   {
     "neovim/nvim-lspconfig",
     opts = function()
-      vim.api.nvim_create_autocmd("CursorHold", {
+      vim.api.nvim_create_autocmd({ "CursorHold", "DiagnosticChanged" }, {
         group = vim.api.nvim_create_augroup("custom_lspconfig", { clear = true }),
         callback = function(args)
           if #vim.lsp.get_clients({ bufnr = args.buf }) == 0 then
@@ -201,7 +201,14 @@ return {
           end
           vim.diagnostic.open_float(nil, {
             focusable = false,
-            close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+            close_events = {
+              "BufLeave",
+              "CursorMoved",
+              "DiagnosticChanged",
+              "InsertEnter",
+              "FocusLost",
+              "TextChanged",
+            },
             source = "always",
             prefix = " ",
             scope = "cursor",
