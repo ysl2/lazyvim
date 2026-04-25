@@ -376,6 +376,8 @@ return {
               fileNameWithoutExt,
               fileNameWithoutExt
             )
+          elseif fileType == "typescript" then
+            cmd = ("cd '%s'; tsc '%s' && node '%s.js'"):format(fileDir, fileName, fileNameWithoutExt)
           end
           if not cmd then
             return
