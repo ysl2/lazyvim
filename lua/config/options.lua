@@ -62,7 +62,7 @@ vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4
 local augroup_custom_filetype = vim.api.nvim_create_augroup("custom_filetype", { clear = true })
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "lua", "typescript", "javascript", "json", "jsonc" },
+  pattern = { "lua", "typescript", "javascript", "json", "jsonc", "mermaid" },
   group = augroup_custom_filetype,
   callback = function()
     vim.opt_local.tabstop = 2
@@ -90,6 +90,13 @@ vim.api.nvim_create_autocmd("FileType", {
   group = augroup_custom_filetype,
   callback = function()
     vim.opt.filetype = "sh"
+  end,
+})
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "mermaid",
+  group = augroup_custom_filetype,
+  callback = function()
+    vim.opt_local.commentstring = "%% %s"
   end,
 })
 vim.api.nvim_create_autocmd("BufEnter", {

@@ -162,6 +162,12 @@ return {
   -- },
   {
     "nvim-treesitter/nvim-treesitter",
+    opts = {
+      ensure_installed = { "mermaid" },
+    },
+  },
+  {
+    "nvim-treesitter/nvim-treesitter",
     opts = function()
       local parsers = require("nvim-treesitter.parsers")
       for _, p in pairs(parsers) do
@@ -308,10 +314,10 @@ return {
           local fileName = vim.fn.expand("%:t")
           local filePath = vim.fn.expand("%:p")
 
-          local tmpFileDir = "/tmp/lf-img" .. fileDir
-          local tmpFileNameWithoutExt = exec("sha256sum '" .. filePath .. "' | awk '{print $1}'")
-          local tmpFileName = tmpFileNameWithoutExt .. ".png"
-          local tmpFilePath = tmpFileDir .. "/" .. tmpFileName
+          local lfTmpFileDir = "/tmp/lf-img" .. fileDir
+          local lfTmpFileNameWithoutExt = exec("sha256sum '" .. filePath .. "' | awk '{print $1}'")
+          local lfTmpFileNamePNG = lfTmpFileNameWithoutExt .. ".png"
+          local lfTmpFilePathPNG = lfTmpFileDir .. "/" .. lfTmpFileNamePNG
 
           local cmd
 
@@ -322,11 +328,11 @@ return {
           elseif fileExt == "drawio" then
             cmd = ("cd '%s'; [ ! -f '%s' ] && mkdir -p '%s' && drawio '%s' --no-sandbox -x -f png -s 0.75 -o '%s' >/dev/null; chafa '%s'"):format(
               fileDir,
-              tmpFilePath,
-              tmpFileDir,
+              lfTmpFilePathPNG,
+              lfTmpFileDir,
               fileName,
-              tmpFilePath,
-              tmpFilePath
+              lfTmpFilePathPNG,
+              lfTmpFilePathPNG
             )
           elseif
             fileExt == "doc"
@@ -346,24 +352,24 @@ return {
             end
             cmd = ([[cd '%s'; [ ! -f '%s' ] && mkdir -p '%s' && libreoffice --headless --convert-to 'pdf:%s:{"PageRange":{"type":"string","value":"1"},"Quality":{"type":"long","value":"25"},"MaxImageResolution":{"type":"long","value":"75"}}' --outdir '%s' '%s' >/dev/null && mv '%s' '%s' && pdftoppm -f 1 -l 1 -png -r 72 -aa no -aaVector no '%s' >'%s'; chafa '%s']]):format(
               fileDir,
-              tmpFilePath,
-              tmpFileDir,
+              lfTmpFilePathPNG,
+              lfTmpFileDir,
               tmp,
-              tmpFileDir,
+              lfTmpFileDir,
               fileName,
-              tmpFileDir .. "/" .. fileNameWithoutExt .. ".pdf",
-              tmpFileDir .. "/" .. tmpFileNameWithoutExt .. ".pdf",
-              tmpFileDir .. "/" .. tmpFileNameWithoutExt .. ".pdf",
-              tmpFilePath,
-              tmpFilePath
+              lfTmpFileDir .. "/" .. fileNameWithoutExt .. ".pdf",
+              lfTmpFileDir .. "/" .. lfTmpFileNameWithoutExt .. ".pdf",
+              lfTmpFileDir .. "/" .. lfTmpFileNameWithoutExt .. ".pdf",
+              lfTmpFilePathPNG,
+              lfTmpFilePathPNG
             )
           elseif fileType == "pdf" then
             cmd = ("cd '%s'; [ ! -f '%s' ] && pdftoppm -f 1 -l 1 -png -r 72 -aa no -aaVector no '%s' >'%s'; chafa '%s'"):format(
               fileDir,
-              tmpFilePath,
+              lfTmpFilePathPNG,
               fileName,
-              tmpFilePath,
-              tmpFilePath
+              lfTmpFilePathPNG,
+              lfTmpFilePathPNG
             )
           elseif fileType == "python" then
             cmd = ("cd '%s'; python '%s'"):format(fileDir, fileName)
@@ -378,6 +384,15 @@ return {
             )
           elseif fileType == "typescript" then
             cmd = ("cd '%s'; tsc '%s' && node '%s.js'"):format(fileDir, fileName, fileNameWithoutExt)
+          elseif fileType == "mermaid" then
+            cmd = ("cd '%s'; [ ! -f '%s' ] && mkdir -p '%s' && mmdc -i '%s' -o '%s' > /dev/null; chafa '%s'"):format(
+              fileDir,
+              lfTmpFilePathPNG,
+              lfTmpFileDir,
+              fileName,
+              lfTmpFilePathPNG,
+              lfTmpFilePathPNG
+            )
           end
           if not cmd then
             return
@@ -1320,6 +1335,16 @@ return {
       marp_command = "",
       show_tips = false,
       suggest_gitignore = false,
+    },
+  },
+  {
+    "kevalin/mermaid.nvim",
+    custom = true,
+    dependencies = "nvim-treesitter/nvim-treesitter",
+    opts = {
+      format = {
+        shift_width = 2,
+      },
     },
   },
 }
