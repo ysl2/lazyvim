@@ -199,7 +199,7 @@ return {
           if #vim.lsp.get_clients({ bufnr = args.buf }) == 0 then
             return
           end
-          vim.diagnostic.open_float(nil, {
+          pcall(vim.diagnostic.open_float, nil, {
             focusable = false,
             close_events = {
               "BufLeave",
