@@ -318,6 +318,7 @@ return {
           local lfTmpFileNameWithoutExt = exec("sha256sum '" .. filePath .. "' | awk '{print $1}'")
           local lfTmpFileNamePNG = lfTmpFileNameWithoutExt .. ".png"
           local lfTmpFilePathPNG = lfTmpFileDir .. "/" .. lfTmpFileNamePNG
+          local lfTmpFilePathPNGRoot = lfTmpFileDir .. "/" .. lfTmpFileNameWithoutExt
 
           local cmd
 
@@ -350,7 +351,7 @@ return {
             elseif fileExt == "xls" or fileExt == "xlsx" then
               tmp = "calc_pdf_Export"
             end
-            cmd = ([[cd '%s'; [ ! -f '%s' ] && mkdir -p '%s' && libreoffice --headless --convert-to 'pdf:%s:{"PageRange":{"type":"string","value":"1"},"Quality":{"type":"long","value":"25"},"MaxImageResolution":{"type":"long","value":"75"}}' --outdir '%s' '%s' >/dev/null && mv '%s' '%s' && pdftoppm -f 1 -l 1 -png -r 72 -aa no -aaVector no '%s' >'%s'; chafa '%s']]):format(
+            cmd = ([[cd '%s'; [ ! -f '%s' ] && mkdir -p '%s' && libreoffice --headless --convert-to 'pdf:%s:{"PageRange":{"type":"string","value":"1"},"Quality":{"type":"long","value":"25"},"MaxImageResolution":{"type":"long","value":"75"}}' --outdir '%s' '%s' >/dev/null && mv '%s' '%s' && pdftoppm -f 1 -l 1 -singlefile -png -r 72 -aa no -aaVector no '%s' '%s'; chafa '%s']]):format(
               fileDir,
               lfTmpFilePathPNG,
               lfTmpFileDir,
@@ -360,15 +361,15 @@ return {
               lfTmpFileDir .. "/" .. fileNameWithoutExt .. ".pdf",
               lfTmpFileDir .. "/" .. lfTmpFileNameWithoutExt .. ".pdf",
               lfTmpFileDir .. "/" .. lfTmpFileNameWithoutExt .. ".pdf",
-              lfTmpFilePathPNG,
+              lfTmpFilePathPNGRoot,
               lfTmpFilePathPNG
             )
           elseif fileType == "pdf" then
-            cmd = ("cd '%s'; [ ! -f '%s' ] && pdftoppm -f 1 -l 1 -png -r 72 -aa no -aaVector no '%s' >'%s'; chafa '%s'"):format(
+            cmd = ("cd '%s'; [ ! -f '%s' ] && pdftoppm -f 1 -l 1 -singlefile -png -r 72 -aa no -aaVector no '%s' '%s'; chafa '%s'"):format(
               fileDir,
               lfTmpFilePathPNG,
               fileName,
-              lfTmpFilePathPNG,
+              lfTmpFilePathPNGRoot,
               lfTmpFilePathPNG
             )
           elseif fileType == "python" then
