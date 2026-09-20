@@ -9,7 +9,6 @@
 -- === "opt"s
 -- pcall(vim.cmd, "autocmd! nvim.swapfile")
 pcall(vim.api.nvim_del_augroup_by_name, "nvim.swapfile")
-vim.opt.lazyredraw = true
 vim.opt.autoread = true
 vim.api.nvim_create_autocmd("BufWritePre", {
   group = vim.api.nvim_create_augroup("custom_fileformat", { clear = true }),
