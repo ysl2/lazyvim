@@ -1272,7 +1272,9 @@ return {
       vim.g.mkdp_auto_close = 0
       vim.g.mkdp_combine_preview = 1
       vim.g.mkdp_echo_preview_url = 1
-      vim.g.mkdp_open_to_the_world = 1
+      -- NOTE: Disable this below because it will generate non-loopback ip that will be routed by proxy (if set) by default, which will cause browser cannot open previw link.
+      -- If you really want to open to the world with proxy enabled, you need to add current machine's ip address to proxy's `Direct` rule to skip route.
+      -- vim.g.mkdp_open_to_the_world = 1
     end,
   },
   -- {
