@@ -373,7 +373,7 @@ return {
               lfTmpFilePathPNG
             )
           elseif fileType == "python" then
-            cmd = ("cd '%s'; python '%s'"):format(fileDir, fileName)
+            cmd = ("cd '%s'; python3 '%s'"):format(fileDir, fileName)
           elseif fileType == "sh" then
             cmd = ("cd '%s'; bash '%s'"):format(fileDir, fileName)
           elseif fileType == "c" then
