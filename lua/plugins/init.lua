@@ -845,7 +845,7 @@ return {
     opts = {
       manual_mode = false,
       detection_methods = { "pattern" },
-      patterns = { "._", ".git" },
+      patterns = { ".project-root", "pyproject.toml", ".git" },
     },
   },
   {
